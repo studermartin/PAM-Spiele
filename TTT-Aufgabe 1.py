@@ -1,153 +1,112 @@
-from treelib import Node, Tree
 
-tree = Tree()
-tree.create_node(tag="B2", identifier="B2")
-tree.create_node("A1", parent="B2", data="Spielfeld")
-print(tree.show(stdout=False))
-
-
-### benötigte Elemente
-
+# Spielfeld
 LEER = "_"
 KREUZ = "X"
 KREIS = "O"
-#
+
 spielfeld = [[LEER] * 3, [LEER] * 3,[LEER] * 3]
-spielfeld[1][1]=KREUZ
-print(spielfeld)
 
 def print_spielfeld(spielfeld):
+    """ Gibt den Inhalt des Spielfeldes aus
+    
+    Parameters:
+    spielfeld -- das auszugebende Spielfeld
+    """
     for zeile in spielfeld:
         zeilen_text=""
         for feld in zeile:
             zeilen_text += feld + " "
         print(zeilen_text)
 
-print_spielfeld(spielfeld)
 
-# Algorithmus für NIMM implementieren.
+# Spieler
+SPIELER_A = KREUZ
+SPIELER_B = KREIS
 
+spieler_am_zug = SPIELER_A
 
+# Überprüfe den Spielstand
+def spielstand(spielfeld):
+    """ Überprüfe den Spielstand
+    Eine Schlusskonfiguration liegt vor, wenn drei Kreuze oder drei Kreise in einer Reihe, Spalte oder Diagonale vorliegen.
 
-class NIMM_Konfiguration:
-    def __init__(self, anzahl: int, a_am_zug: bool, gewinnstellung_fuer: str=""):
-        self.anzahl = anzahl
-        self.a_am_zug = a_am_zug
-        self.gewinnstellung_fuer = gewinnstellung_fuer
+    Return:
+    Gibt X, O oder _ zurück, je nach dem ob Spieler A gewonnen hat, Spieler B gewonnen hat 
+    oder noch keine Schlusskonfiguration vorliegt.
+    """
 
-    def beschreibung(self):
-        ausgabe_streichhoelzer = "Streichhölzer: " + str(self.anzahl) + ". "
-        ausgabe_am_zug = "Spieler "
-        if self.a_am_zug:
-            ausgabe_am_zug += "A"
-        else:
-            ausgabe_am_zug += "B"
-        ausgabe_am_zug += " am Zug. "
-        ausgabe_gewinnstellung_fuer = "Gewinnstellung für " + self.gewinnstellung_fuer + "."
-     
-        return ausgabe_streichhoelzer + ausgabe_am_zug + ausgabe_gewinnstellung_fuer
-
-    def ausgabe(self):
-        print(self.beschreibung())
-
+    # Prüfe alle Zeilen auf das Vorliegen von drei Kreuzen oder Kreisen
+    zeile = 0
+    while zeile < 3:
+        erster_zeilenwert = spielfeld[zeile][0]
+        dreier_in_zeile = True
+        spalte = 1
+        while spalte < 3:
+            if erster_zeilenwert != spielfeld[zeile][spalte]:
+                dreier_in_zeile = False
+                break
+            spalte += 1
+        if dreier_in_zeile and erster_zeilenwert != LEER:
+            return erster_zeilenwert
+        zeile += 1
+  
+    # Prüfe alle Spalten auf das Vorliegen von drei Kreuzen oder Kreisen
+    spalte = 0
+    while spalte < 3:
+        erster_spaltenwert = spielfeld[0][spalte]
+        dreier_in_spalte = True
+        zeile = 1
+        while zeile < 3:
+            if erster_spaltenwert != spielfeld[zeile][spalte]:
+                dreier_in_spalte = False
+                break
+            zeile += 1
+        if dreier_in_spalte and erster_spaltenwert != LEER:
+            return erster_spaltenwert
+        spalte += 1
     
+    # Prüfe, ob die Spalte von links oben nach rechts unten drei Kreuzen oder Kreisen enthalten
+    dreier_in_diagonale = True
+    erster_diagonalenwert = spielfeld[0][0]
+    index = 1
+    while index < 3:
+        if spielfeld[index][index] != erster_diagonalenwert:
+            dreier_in_diagonale = False
+            break
+        index += 1
+    if dreier_in_diagonale and erster_diagonalenwert != LEER:
+        return erster_diagonalenwert
+    
+    # Prüfe, ob die Spalte von rechts oben nach links unten drei Kreuzen oder Kreisen enthalten
+    dreier_in_diagonale = True
+    erster_diagonalenwert = spielfeld[0][3-1]
+    index = 1
+    while index < 3:
+        if spielfeld[index][3-index-1] != erster_diagonalenwert:
+            dreier_in_diagonale = False
+            break
+        index += 1
+    if dreier_in_diagonale and erster_diagonalenwert != LEER:
+        return erster_diagonalenwert
 
-# am besten würde man das wohl rekursiv machen
-# iterativ, einfach Stufe für Stufe geht auch
-# leaves könnte man verwenden
+    return LEER
 
-NIMM = Tree()
-data=NIMM_Konfiguration(12, True)
-root:Node = NIMM.create_node(tag=data.beschreibung(), data=data)
-tiefe=0
-while tiefe<data.anzahl:
-    for leaf in NIMM.leaves():
-        nimm:NIMM_Konfiguration=leaf.data
-        i=1
-        while i<=3 and i<=nimm.anzahl:
-            spieler_am_zug = "A"
-            if nimm.a_am_zug:
-                spieler_am_zug = "B"
-            n = NIMM_Konfiguration(nimm.anzahl-i, not nimm.a_am_zug)
-            NIMM.create_node(n.beschreibung(), parent=leaf, data=n)
-            i += 1
-    tiefe += 1
+# Test ist_schlusskonfiguration
+spielfeld1 = [[LEER] * 3, [LEER] * 3,[LEER] * 3]
+print("Spielfeld in Anfangskonfiguration: ", spielstand(spielfeld1))
 
-# Gewinnstellung bei den Blättern
-leaf:Node=None
-for leaf in NIMM.leaves():
-    nimm:NIMM_Konfiguration=leaf.data
-    if nimm.anzahl==0:
-        if nimm.a_am_zug:
-            nimm.gewinnstellung_fuer = "B"
-        else:
-            nimm.gewinnstellung_fuer = "A"
-        leaf.tag=nimm.beschreibung()
+spielfeld_3_kreuze_in_letzter_spalte= [
+    [LEER, LEER,  KREUZ],
+    [LEER, KREIS, KREUZ],
+    [KREIS,KREIS, KREUZ]]
+print("Spielfeld mit 3 Kreuzen in letzter Spalte: ", spielstand(spielfeld_3_kreuze_in_letzter_spalte))
 
-tiefe = 0
-while tiefe <=tiefe<data.anzahl:
-    for leaf in NIMM.all_nodes():
-        nimm:NIMM_Konfiguration=leaf.data
-        if nimm.gewinnstellung_fuer == "":
-            ein_A=False
-            ein_B=False
-            alle_A=True
-            alle_B=True
-            for l in NIMM.children(leaf.identifier):
-                n:NIMM_Konfiguration=l.data
-                if n.gewinnstellung_fuer=="A":
-                    ein_A=True
-                    alle_B=False
-                elif n.gewinnstellung_fuer=="B":
-                    ein_B=True
-                    alle_A=False
-                else:
-                    alle_A=False
-                    alle_B=False
-            # wenn alle ich am Zug bin und mindestens einer der Kinder eine Gewinnstellung für nich, dann ist es eine Gewinnstellung
-            if nimm.a_am_zug:
-                if ein_A:
-                    nimm.gewinnstellung_fuer="A"
-                    leaf.tag=nimm.beschreibung()
-                if alle_B:
-                    nimm.gewinnstellung_fuer="B"
-                    leaf.tag=nimm.beschreibung()
-            elif not nimm.a_am_zug:                    
-                if ein_B:
-                    nimm.gewinnstellung_fuer="B"
-                    leaf.tag=nimm.beschreibung()
-                if alle_A:
-                    nimm.gewinnstellung_fuer="A"
-                    leaf.tag=nimm.beschreibung()
-            else:
-                None
-
-    tiefe += 1
-
-print(NIMM.show(stdout=False))
-
-rootNIMM: NIMM_Konfiguration = root.data
-print("Für das Spiel NIMM", rootNIMM.anzahl, "gilt für Spieler A")
-if rootNIMM.gewinnstellung_fuer=="A":
-    print("Spieler hat eine Gewinnstrategie.")
-    # finde ersten Zug mit einer Gewinnstellung für A
-    konf: NIMM_Konfiguration
-    for leaf in NIMM.children(root.identifier):
-        konf = leaf.data
-        if konf.gewinnstellung_fuer=="A":
-            break;
-    zug = rootNIMM.anzahl-konf.anzahl
-    print("A nimmt im ersten Zug", zug, "Streichhölzer.")
-elif rootNIMM.gewinnstellung_fuer=="B":
-    print("Spieler A verliert, weil Spieler B eine Gewinnstrategie hat.")
-else:
-    None
+spielfeld_3_kreise_in_diagonale_linksoben_rechtsunten = [
+    [LEER, KREUZ,  KREIS],
+    [KREUZ, KREIS, KREUZ],
+    [KREIS,KREIS, KREUZ]]
+print("Spielfeld mit 3 Kreisen Diagonale von rechts oben nach links unten: ", spielstand(spielfeld_3_kreise_in_diagonale_linksoben_rechtsunten))
 
 
-
-# class Spielfeld:
-#     def __init__(self, id: Optional[int], name: str = "Unnamed"):
-#         self.id = id
-#         self.name = name
 
 
