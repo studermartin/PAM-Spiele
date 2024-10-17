@@ -4,8 +4,6 @@ LEER = "_"
 KREUZ = "X"
 KREIS = "O"
 
-spielfeld = [[LEER] * 3, [LEER] * 3,[LEER] * 3]
-
 def print_spielfeld(spielfeld):
     """ Gibt den Inhalt des Spielfeldes aus
     
@@ -23,10 +21,8 @@ def print_spielfeld(spielfeld):
 SPIELER_A = KREUZ
 SPIELER_B = KREIS
 
-spieler_am_zug = SPIELER_A
-
 # Überprüfe den Spielstand
-def spielstand(spielfeld):
+def uberpruefe_spielstand(spielfeld):
     """ Überprüfe den Spielstand
     Eine Schlusskonfiguration liegt vor, wenn drei Kreuze oder drei Kreise in einer Reihe, Spalte oder Diagonale vorliegen.
 
@@ -91,22 +87,13 @@ def spielstand(spielfeld):
 
     return LEER
 
-# Test ist_schlusskonfiguration
-spielfeld1 = [[LEER] * 3, [LEER] * 3,[LEER] * 3]
-print("Spielfeld in Anfangskonfiguration: ", spielstand(spielfeld1))
-
-spielfeld_3_kreuze_in_letzter_spalte= [
-    [LEER, LEER,  KREUZ],
-    [LEER, KREIS, KREUZ],
-    [KREIS,KREIS, KREUZ]]
-print("Spielfeld mit 3 Kreuzen in letzter Spalte: ", spielstand(spielfeld_3_kreuze_in_letzter_spalte))
-
-spielfeld_3_kreise_in_diagonale_linksoben_rechtsunten = [
-    [LEER, KREUZ,  KREIS],
-    [KREUZ, KREIS, KREUZ],
-    [KREIS,KREIS, KREUZ]]
-print("Spielfeld mit 3 Kreisen Diagonale von rechts oben nach links unten: ", spielstand(spielfeld_3_kreise_in_diagonale_linksoben_rechtsunten))
-
-
-
-
+def pruefe_zug(spielfeld, zeile: int, spalte: int):
+    """ Prüft, ob das Setzen eines Kreuzes oder eines Kreises in der angegebenen Zeile und Spalte ein gültiger Zug ist
+    """
+    zeilen_und_spalten_gueltig:bool = 1 <= zeile and zeile <= 3 and 1 <= spalte and spalte <= 3
+    if not(zeilen_und_spalten_gueltig):
+        return False
+    feld_leer = spielfeld[zeile - 1][spalte - 1] == LEER
+    if not (feld_leer):
+        return False
+    return True
