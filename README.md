@@ -1,1 +1,1 @@
-# PAM
+# PAM-Spiele
