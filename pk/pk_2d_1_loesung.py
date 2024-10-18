@@ -219,7 +219,7 @@ print(feld2x2)
 #   Die Zahl -1 kommt nicht vor.
 print("\nAufgabe 4")
 
-# Lösung Aufgabe 3:
+# Lösung Aufgabe 4:
 def suche2x2(feld2x2, wert):
     gefunden = False
     zeile = 0
