@@ -1,4 +1,4 @@
-from ttt.ttt_spiel_1_loesung import *
+from ttt_spiel_1_loesung import *
 
 spielfeld = [[LEER] * 3, [LEER] * 3, [LEER] * 3]
 spieler_am_zug = SPIELER_A

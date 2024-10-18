@@ -1,4 +1,4 @@
-from ttt.ttt_spiel_1_loesung import uberpruefe_spielstand, KREUZ, KREIS, LEER, pruefe_zug
+from ttt_spiel_1_loesung import uberpruefe_spielstand, KREUZ, KREIS, LEER, pruefe_zug
 
 # Spielfeld in Anfangskonfiguration
 spielfeld1 = [[LEER] * 3, [LEER] * 3,[LEER] * 3]
