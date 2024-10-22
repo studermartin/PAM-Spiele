@@ -28,7 +28,7 @@ Danach setzt der Spiel B einen Kreis oben links.
 spielfeld[0][0] = "O"
 
 
-
+#####################################################
 ''' Teilaufgabe 1: Befehl print_spielfeld
 
 Der Befehl print_spielfeld soll das Spielfeld in hübscher Form ausgeben.
@@ -48,6 +48,7 @@ Möchte man das Spiel am Computer spielen, muss man prüfen, ob der Zug auch gü
 Gültig ist ein Zug, wenn das Feld noch nicht besetzt ist.
 '''
 
+#####################################################
 ''' Teilaufgabe 2: Funktion pruefe_zug
 
 Die Funktion pruefe_zug erhält ein Spielfeld sowie die Angabe der Zeile/Spalte (eine Zahl zwischen 1 und 3), an welcher ein Zeichen gesetzt werden soll. Falls der Zug gültig ist, soll die Funktion True, ansonsten False zurückgeben.
@@ -70,6 +71,7 @@ print(pruefe_zug(spielfeld, 2, 2))  # Mitte ist besetzt
 print(pruefe_zug(spielfeld, 0, 1))  # 0 ist eine ungültige Zeilenangabe
 
 
+#####################################################
 ''' Teilaufgabe 3: Funktion uberpruefe_spielstand
 
 Die Funktion ueberpruefe_spielstand soll prüfen, ob eine Endkonfiguration vorliegt.
@@ -97,5 +99,26 @@ spielfeld_3_kreise_in_diagonale_linksoben_rechtsunten = [
     ["X", "O", "X"],
     ["O", "O", "X"]]
 print(uberpruefe_spielstand(spielfeld_3_kreise_in_diagonale_linksoben_rechtsunten))
+
+
+
+#####################################################
+''' Teilaufgabe 4: Spiel implementieren
+Jetzt hast du alle Elemente, um das Spiel zu implementieren. Das Spiel besteht aus folgenden Schritten:
+1. Spielfels ausgeben
+Tipp: Teilaufgabe 1
+2. Spieler A um einen Zug bitten (je eine Eingabe für Zeile und Spalte)
+Tipp: zeile = input("Bitte Zeile eingeben")
+3. Prüfen, ob der Zug gültig ist 
+Tipp: Teilaufgabe 2
+4. Zug durchführen
+5. Prüfen, ob eine Gewinnzeile vorliegt
+Tipp: Teilaufgabe 3
+
+Die Schritte müssen für den Spieler B wiederholt und danach für beide wiederholt werden, bis eine Gewinnzeile vorliegt.
+
+'''
+
+
 
 
