@@ -25,6 +25,43 @@ def check_winner(board, player):
 def is_board_full(board):
     return all(cell != " " for row in board for cell in row)
 
+def move(board, player):
+    # Board mit zahlen füllen.
+    winning_lines = [[0 for _ in range(3)] for _ in range(3)]
+
+    # check rows
+    for row_index in range(3):
+        if all(board[row_index][coll_index] == player or board[row_index][coll_index] == " " for coll_index in range(3)):
+            for coll_index in range(3):
+                winning_lines[row_index][coll_index] += 1
+
+    # check columns
+    for coll_index in range(3):
+        if all(board[row_index][coll_index] == player or board[row_index][coll_index] == " " for row_index in range(3)):
+            for row_index in range(3):
+                winning_lines[row_index][coll_index] += 1
+
+    # check diagonals
+    if all(board[index][index] == player or board[index][index] == " " for index in range(3)):
+           for index in range(3):
+                winning_lines[index][index] += 1
+    if all(board[index][2-index] == player or board[index][2-index] == " " for index in range(3)):
+           for index in range(3):
+                winning_lines[index][2-index] += 1
+
+    # find position with maximum winning lines
+    row_index_max = 0
+    coll_index_max = 0
+    max = 0
+    for row_index in range(3):
+        for coll_index in range(3):
+            if winning_lines[row_index][coll_index]>max:
+                max = winning_lines[row_index][coll_index]
+                row_index_max = row_index
+                coll_index_max = coll_index
+
+    return row_index_max, coll_index_max, max
+
 def play_game():
     board = [[" " for _ in range(3)] for _ in range(3)]
     current_player = "X"
@@ -33,6 +70,10 @@ def play_game():
         print_board(board)
         print(f"Player {current_player}'s turn")
         
+        # Best move
+        row, coll, max = move(board, current_player)
+        print(f"Best move is row {row} coll {coll} with {max} winning lines.")
+
         # Get player move
         while True:
             try:
