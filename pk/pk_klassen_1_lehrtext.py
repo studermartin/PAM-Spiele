@@ -40,6 +40,12 @@ class Baer:
         print("fressen")
 
 # Klassen sind wie Baupläne.
+# Sie können Wert und Methoden/Befehle enthalten.
+
+# Der Parameter self bei Methoden repräsentiert die Instanz, 
+# ist also so etwas wie ein Zeiger auf sich selbst.
+# Man kann damit innerhalb des Codes der Klasse in Python die eigenen Attribute oder Methoden benutzen.
+
 # Wir haben noch keine Bären erzeugt.
 
 
