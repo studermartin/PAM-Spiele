@@ -67,6 +67,11 @@ print("Baum ausgeben:")
 wurzel.print()
 
 
+# Aufgabe: hübsche Ausgabe
+# Je weiter unten die Knoten im Baum sind, desto mehr einrücken.
+
+
+
 #####################################
 print("\n\n### Zähle die Anzahl Knoten im Baum\n\n")
 
@@ -113,19 +118,44 @@ wurzel.kinder.append(knoten1)
 
 print("Der Baum startend mit der Wurzel die folgende Anzahl Knoten:", wurzel.anzahl())
 
+# Noch ein Knoten
+knoten1_1 = Knoten(7)
+knoten1.kinder.append(knoten1_1)
+wurzel.print()
+print("Der Baum startend mit der Wurzel die folgende Anzahl Knoten:", wurzel.anzahl())
+
+# Upps, das stimmt nicht.
+# Wie verbessern wir das?
 
 
 #####################################
 print("\n\n### Auf Blatt prüfen\n\n")
 
 # Wir möchte prüfen, ob ein Knoten ein Blatt ist oder nicht.
+#   print(knoten1_1.ist_blatt()) 
+# soll TRUE zurückgeben.
+
+
+#####################################
+print("\n\n### Kindknoten mit bestimmtem Wert suchen\n\n")
+
+# Aufgabe: Kindknoten mit bestimmtem Wert suchen
 
 
 
 #####################################
-print("\n\n### Knoten suchen\n\n")
+print("\n\n### Knoten im Baum mit bestimmtem Wert suchen\n")
 
-# Wir möchte prüfen, ob ein Knoten ein Blatt ist oder nicht.
+# Aufgabe: Kindknoten mit bestimmtem Wert suchen
+
+def erstes_kind_mit_wert(self, wert):
+    for kind in self.kinder:
+        if kind.wert == wert:
+            return kind
+
+Knoten.erstes_kind_mit_wert = erstes_kind_mit_wert
+print(wurzel.erstes_kind_mit_wert(10))
+
 
 
 
@@ -133,21 +163,11 @@ print("\n\n### Knoten suchen\n\n")
 print("\n\n### Auf Wurzel prüfen\n\n")
 
 # Wir möchte prüfen, ob ein Knoten die Wurzel ist oder nicht.
-
+# Aktuell nicht lösbar!
 
 
 #####################################
 print("\n\n### Verhängen von Knoten (Vater)\n\n")
 
-
-
-# alle durchgehen
-# rekursiv kein Problem
-# navigieren
-
-
-
-
-# Aufgaben
 
 
