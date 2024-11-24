@@ -75,4 +75,14 @@ Knoten.erzeuge_zuege = erzeuge_zuege
 # alle bereits erzeugten Knoten durchgehen und nochmals Knoten anzähgen
 
 
+#######
+# Besserer Ansatz: Rekurs
+#######
+
+# 1. Züge erzeugen
+# 2. für jeden zug weiderum das erzeugen aufrufen
+
+
+
+
 
