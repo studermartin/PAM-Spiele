@@ -10,7 +10,7 @@ N:Final[int]=9          #  N is used for size of Sudoku grid. Size will be NxN
 # If found, the reference parameters row, col will be set the location 
 # that is unassigned, and true is returned. If no unassigned entries
 # remain, false is returned.
-def find_unassigned_location(grid)->tuple[int,int]:
+def find_unassigned_location(grid:list[list[int]])->tuple[int,int]:
     row:int=0
     while row < N:
         col:int = 0
@@ -23,7 +23,7 @@ def find_unassigned_location(grid)->tuple[int,int]:
 
 # Returns a boolean which indicates whether any assigned entry
 # in the specified row matches the given number. */
-def used_in_row(grid, row:int, num:int)->bool:
+def used_in_row(grid:list[list[int]], row:int, num:int)->bool:
     col:int = 0
     while col < N:
         if grid[row][col] == num:
@@ -34,7 +34,7 @@ def used_in_row(grid, row:int, num:int)->bool:
 
 # Returns a boolean which indicates whether any assigned entry
 # in the specified column matches the given number. */
-def used_in_col(grid, col:int, num: int)->bool:
+def used_in_col(grid:list[list[int]], col:int, num: int)->bool:
     row:int=0
     while row < N:
         if grid[row][col] == num:
@@ -44,7 +44,7 @@ def used_in_col(grid, col:int, num: int)->bool:
 
 # Returns a boolean which indicates whether any assigned entry
 # within the specified 3x3 box matches the given number. 
-def used_in_box(grid, boxStartRow:int, boxStartCol:int, num:int)->bool:
+def used_in_box(grid:list[list[int]], boxStartRow:int, boxStartCol:int, num:int)->bool:
     row:int=0
     while row < 3:
         col:int = 0
@@ -57,13 +57,13 @@ def used_in_box(grid, boxStartRow:int, boxStartCol:int, num:int)->bool:
 
 # Returns a boolean which indicates whether it will be legal to assign
 # num to the given row,col location.
-def is_safe(grid, row:int, col:int, num:int)->bool:
+def is_safe(grid:list[list[int]], row:int, col:int, num:int)->bool:
     # Check if 'num' is not already placed in current row,
     # current column and current 3x3 box
     return not used_in_row(grid, row, num) and not used_in_col(grid, col, num) and not used_in_box(grid, row - row%3 , col - col%3, num)
 
 
-grid =  [[3, 0, 6, 5, 0, 8, 4, 0, 0],
+grid:list[list[int]] =  [[3, 0, 6, 5, 0, 8, 4, 0, 0],
          [5, 2, 0, 0, 0, 0, 0, 0, 0],
          [0, 8, 7, 0, 0, 0, 0, 3, 1],
          [0, 0, 3, 0, 1, 0, 0, 8, 0],
@@ -89,7 +89,8 @@ assert is_safe(grid, 4, 1, 9) == False
 assert is_safe(grid, 4, 1, 1) == True
 
 
-grid =  [[5, 3, 0, 0, 7, 0, 0, 0, 0],
+# Grid from https://en.wikipedia.org/wiki/Sudoku
+grid:list[list[int]] =  [[5, 3, 0, 0, 7, 0, 0, 0, 0],
          [6, 0, 0, 1, 9, 5, 0, 0, 0],
          [0, 9, 8, 0, 0, 0, 0, 6, 0],
          [8, 0, 0, 0, 6, 0, 0, 0, 3],
@@ -146,5 +147,3 @@ if solve_sudoku(grid):
 else:
     print("No solution exists")
  
-
-
