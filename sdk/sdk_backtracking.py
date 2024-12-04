@@ -58,13 +58,10 @@ def used_in_box(grid, boxStartRow:int, boxStartCol:int, num:int)->bool:
 # Returns a boolean which indicates whether it will be legal to assign
 # num to the given row,col location.
 def is_safe(grid, row:int, col:int, num:int)->bool:
-{
-    /* Check if 'num' is not already placed in current row,
-       current column and current 3x3 box */
-    return !UsedInRow(grid, row, num) &&
-           !UsedInCol(grid, col, num) &&
-           !UsedInBox(grid, row - row%3 , col - col%3, num);
-}
+    # Check if 'num' is not already placed in current row,
+    # current column and current 3x3 box
+    return not used_in_row(grid, row, num) and not used_in_col(grid, col, num) and not used_in_box(grid, row - row%3 , col - col%3, num)
+
 
 grid =  [[3, 0, 6, 5, 0, 8, 4, 0, 0],
          [5, 2, 0, 0, 0, 0, 0, 0, 0],
@@ -75,7 +72,6 @@ grid =  [[3, 0, 6, 5, 0, 8, 4, 0, 0],
          [1, 3, 0, 0, 0, 0, 2, 5, 0],
          [0, 0, 0, 0, 0, 0, 0, 7, 4],
          [0, 0, 5, 2, 0, 6, 3, 0, 0]]
-
 
 assert find_unassigned_location(grid)==(0,1)
 
@@ -89,8 +85,66 @@ assert used_in_col(grid,1,9) == False
 assert used_in_box(grid, 0, 0, 7)
 assert used_in_box(grid, 0, 0, 9) == False
 
+assert is_safe(grid, 4, 1, 9) == False
+assert is_safe(grid, 4, 1, 1) == True
 
-# Checks whether it will be legal to assign num to the given row,col
-def isSafe(grid, row:int, col:int, num:int)->bool:
-    pass
+
+grid =  [[5, 3, 0, 0, 7, 0, 0, 0, 0],
+         [6, 0, 0, 1, 9, 5, 0, 0, 0],
+         [0, 9, 8, 0, 0, 0, 0, 6, 0],
+         [8, 0, 0, 0, 6, 0, 0, 0, 3],
+         [4, 0, 0, 8, 0, 3, 0, 0, 1],
+         [7, 0, 0, 0, 2, 0, 0, 0, 6],
+         [0, 6, 0, 0, 0, 0, 2, 8, 0],
+         [0, 0, 0, 4, 1, 9, 0, 0, 5],
+         [0, 0, 0, 0, 8, 0, 0, 7, 0]]
+
+
+# A utility function to print grid
+def print_grid(grid)->None:
+    row:int=0
+    while row < N:
+        col:int = 0
+        while col < N:
+            print(grid[row][col], end=" ")
+            col += 1
+        row += 1
+        print("");
+
+
+
+
+# Takes a partially filled-in grid and attempts to assign values to
+ # all unassigned locations in such a way to meet the requirements
+#  for Sudoku solution (non-duplication across rows, columns, and boxes)
+def solve_sudoku(grid)->bool:
+    # If there is no unassigned location, we are done
+    location:tuple[int,int] = find_unassigned_location(grid)
+    if location == None:
+       return True
+ 
+    # consider digits 1 to 9
+    num:int = 1
+    while num <= 9:
+        # if looks promising
+        (row,col)=location
+        if is_safe(grid, row, col, num):
+            # make tentative assignment
+            grid[row][col] = num;
+ 
+            # return, if success, yay!
+            if solve_sudoku(grid):
+                return True;
+ 
+            # failure, unmake & try again
+            grid[row][col] = UNASSIGNED;
+        num += 1
+    return False; # this triggers backtracking
+
+if solve_sudoku(grid):
+    print_grid(grid);
+else:
+    print("No solution exists")
+ 
+
 
