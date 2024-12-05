@@ -90,7 +90,7 @@ def erzeuge_zuege_rekursiv(self):
     for kind in self.kinder:
         kind_konfiguration = kind.konfiguration
         if kind_konfiguration.anzahl_streichhoelzer > 0:
-            erzeuge_zuege_rekursiv(kind)
+            kind.erzeuge_zuege_rekursiv()
 
 Knoten.erzeuge_zuege_rekursiv = erzeuge_zuege_rekursiv
 
