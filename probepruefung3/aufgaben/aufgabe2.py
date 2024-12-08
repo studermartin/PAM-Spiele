@@ -40,11 +40,20 @@ class Knoten:
     def ist_blatt(self):
         return len(self.kinder) == 0
 
+    ''' Teilaufgabe 1: Anzahl Kinder (nicht rekursiv) '''
+    # Implementiere eine Methode, die die Anzahl Kinder eines Knotens (nicht des ganzen Teilbaumes) zurückgibt.
     def anzahl_kinder(self):
-        pass    # Teilaufgabe 1
+        pass    
 
+    ''' Teilaufgabe 2: Höhe des Baumes (rekursiv) '''
+    # Implementiere eine Methode, die die Höhe des Baumes zurückgibt.
+    # Ein Baum nur mit einem Wurzelknoten hat die Höhe 0.
+    # Der vorliegende Baum hat die Höhe 2.
+    # Hinweis: 
+    # - Nutzen die Methode anzahl oder summe als Vorlage benutzen.
     def hoehe(self):
-        pass    # Teilaufgabe 2
+        pass
+
 
 wurzel = Knoten(1)
 kind1 = Knoten(2)
@@ -58,24 +67,11 @@ wurzel.print_teilbaum(0)
 assert wurzel.anzahl() == 4
 assert wurzel.summe() == 12
 
-
-
-''' Teilaufgabe 1: Anzahl Kinder (nicht rekursiv) '''
-
-# Implementiere eine Methode, die die Anzahl Kinder eines Knotens (nicht des ganzen Teilbaumes) zurückgibt.
-
+# Teilaufgabe 1
 assert wurzel.anzahl_kinder() == 2
 assert kind1.anzahl_kinder() == 0
 
-
-''' Teilaufgabe 2: Höhe des Baumes (rekursiv) '''
-
-# Implementiere eine Methode, die die Höhe des Baumes zurückgibt.
-# Ein Baum nur mit einem Wurzelknoten hat die Höhe 0.
-# Der vorliegende Baum hat die Höhe 2.
-# Hinweis: 
-# - Nutzen die Methode anzahl oder summe als Vorlage benutzen.
-
+# Teilaufgabe 2
 assert kind2_1.hoehe() == 0
 assert kind2.hoehe() == 1
 assert wurzel.hoehe() == 2

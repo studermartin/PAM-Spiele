@@ -66,11 +66,19 @@ class Knoten:
 
 
 wurzel = Knoten(1)
+if wurzel.linkesKind == None:
+    print("Die Wurzel hat kein linkes Kind")
+else:
+    print("Die Wurzel hat ein linkes Kind.")
 assert wurzel.linkesKind == None
 assert wurzel.rechtesKind == None
 
 kind1 = Knoten(2)
 wurzel.linkesKind = kind1
+if wurzel.linkesKind == None:
+    print("Die Wurzel hat kein linkes Kind")
+else:
+    print("Die Wurzel hat ein linkes Kind.")
 assert wurzel.linkesKind != None
 assert wurzel.rechtesKind == None
 
