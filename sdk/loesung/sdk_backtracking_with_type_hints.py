@@ -38,7 +38,7 @@ def used_in_col(grid:list[list[int]], col:int, num: int)->bool:
     row:int=0
     while row < N:
         if grid[row][col] == num:
-            return True;
+            return True
         row += 1
     return False;
 
